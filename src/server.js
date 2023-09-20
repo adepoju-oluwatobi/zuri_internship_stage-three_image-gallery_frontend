@@ -1,0 +1,1 @@
+export const server_login = "http://localhost:3000/login";
