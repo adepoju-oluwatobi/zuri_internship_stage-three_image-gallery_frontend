@@ -21,8 +21,8 @@ const LoginForm = () => {
       if (response.status === 200 && response.data.user) {
         setUser(response.data.user);
       }
-      toast.success("Login Successful!");
       navigate('/gallery');
+      toast.success("Login Successful!");
     } catch (error) {
       toast.warning(error.response.data.error);
 
