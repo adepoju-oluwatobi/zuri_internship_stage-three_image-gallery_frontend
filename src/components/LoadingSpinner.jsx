@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
 const LoadingSpinner = () => {
-  const [currentColor, setCurrentColor] = useState('bg-red-500'); // Initial color
-  const colors = ['bg-red-500', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500']; // List of colors
-  let colorIndex = 0; // Current color index
+  const [currentColor, setCurrentColor] = useState('bg-red-500');
+  const colors = ['bg-red-500', 'bg-blue-500', 'bg-green-500', 'bg-yellow-500'];
+  let colorIndex = 0;
 
   useEffect(() => {
     // Function to change the color every 500 milliseconds

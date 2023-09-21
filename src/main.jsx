@@ -6,7 +6,6 @@ import {
 } from "react-router-dom";
 import "./index.css";
 import App from "./App";
-import Gallery from "./components/Gallery";
 import ImageCard from "./components/ImageCard";
 
 const router = createBrowserRouter([

@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [user, setUser] = useState(null); // To store user data
+  const [user, setUser] = useState(null);
 
   const navigate = useNavigate();
 
@@ -21,8 +21,8 @@ const LoginForm = () => {
       if (response.status === 200 && response.data.user) {
         setUser(response.data.user);
       }
-      navigate('/gallery');
       toast.success("Login Successful!");
+      navigate('/gallery');
     } catch (error) {
       toast.warning(error.response.data.error);
 

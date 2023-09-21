@@ -1,13 +1,12 @@
-// Header.js
 import React, { useState } from 'react';
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   // Function to toggle login/logout status
-  const toggleLogin = () => {
-    setIsLoggedIn(!isLoggedIn);
-  };
+//   const toggleLogin = () => {
+//     setIsLoggedIn(!isLoggedIn);
+//   };
 
   return (
     <header className="bg-indigo-600 p-4">
