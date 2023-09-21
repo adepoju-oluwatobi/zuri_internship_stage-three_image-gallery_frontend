@@ -156,18 +156,24 @@ function ImageCard() {
       <div className="image-gallery flex flex-wrap gap-4">
         {loading ? ( // Display loading spinner while loading
            <div className="flex justify-center items-center w-full h-full mt-[-10%]">
-           <LoadingSpinner />
-         </div>
+             <LoadingSpinner />
+           </div>
         ) : (
           <DndContext
             collisionDetection={closestCenter}
             onDragEnd={onDragEnd}>
             <SortableContext items={filteredItems} strategy={horizontalListSortingStrategy}>
-              <div className='w-fit p-4 grid grid-cols-2 md:grid-cols-4 m-auto gap-4'>
-                {filteredItems.map(cardItem => (
-                  <SortableCard key={cardItem.id} cardItem={cardItem} />
-                ))}
-              </div>
+              {filteredItems.length > 0 ? ( // Check if there are search results
+                <div className='w-fit p-4 grid grid-cols-2 md:grid-cols-4 m-auto gap-4'>
+                  {filteredItems.map(cardItem => (
+                    <SortableCard key={cardItem.id} cardItem={cardItem} />
+                  ))}
+                </div>
+              ) : ( // Display a message when there are no search results
+                <div className="text-center w-[300px] m-auto text-gray-500 mt-4">
+                  No matching results found.
+                </div>
+              )}
             </SortableContext>
           </DndContext>
         )}
