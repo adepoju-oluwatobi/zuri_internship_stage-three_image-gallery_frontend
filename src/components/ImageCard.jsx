@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DndContext, closestCenter } from '@dnd-kit/core';
 import { SortableContext, arrayMove, horizontalListSortingStrategy, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import Header from './Header';
+import LoadingSpinner from './LoadingSpinner';
 
 const initialCardState = [
     {
@@ -112,6 +113,14 @@ const SortableCard = ({ cardItem }) => {
 function ImageCard() {
   const [items, setItems] = useState(initialCardState);
   const [searchTerm, setSearchTerm] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading data
+    setTimeout(() => {
+      setLoading(false); // Set loading to false after 2 seconds
+    }, 2000);
+  }, []);
 
   const onDragEnd = (event) => {
     const { active, over } = event;
@@ -121,7 +130,7 @@ function ImageCard() {
     setItems((cards) => {
       const oldIndex = cards.findIndex((cardItem) => cardItem.id === active.id);
       const newIndex = cards.findIndex((cardItem) => cardItem.id === over.id);
-      return arrayMove(cards, oldIndex, newIndex)
+      return arrayMove(cards, oldIndex, newIndex);
     });
     console.log('Drag ended:', event);
   };
@@ -136,28 +145,32 @@ function ImageCard() {
       <Header />
       <p className='text-3xl font-bold text-center mt-4'>Image Gallery</p>
       <div className='w-[300px] p-4 m-auto'>
-          <input
-            type="text"
-            placeholder="Search by tag"
-            className="w-[300px] m-auto p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          {/* <button className='bg-black px-4 py-1 text-white rounded relative top-[-37px] left-[212px]'>search</button> */}
-        </div>
+        <input
+          type="text"
+          placeholder="Search by tag"
+          className="w-[300px] m-auto p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
       <div className="image-gallery flex flex-wrap gap-4">
-       
-        <DndContext
-          collisionDetection={closestCenter}
-          onDragEnd={onDragEnd}>
-          <SortableContext items={filteredItems} strategy={horizontalListSortingStrategy}>
-            <div className='w-fit p-4 grid grid-cols-2 md:grid-cols-4 m-auto gap-4'>
-              {filteredItems.map(cardItem => (
-                <SortableCard key={cardItem.id} cardItem={cardItem} />
-              ))}
-            </div>
-          </SortableContext>
-        </DndContext>
+        {loading ? ( // Display loading spinner while loading
+           <div className="flex justify-center items-center w-full h-full mt-[-10%]">
+           <LoadingSpinner />
+         </div>
+        ) : (
+          <DndContext
+            collisionDetection={closestCenter}
+            onDragEnd={onDragEnd}>
+            <SortableContext items={filteredItems} strategy={horizontalListSortingStrategy}>
+              <div className='w-fit p-4 grid grid-cols-2 md:grid-cols-4 m-auto gap-4'>
+                {filteredItems.map(cardItem => (
+                  <SortableCard key={cardItem.id} cardItem={cardItem} />
+                ))}
+              </div>
+            </SortableContext>
+          </DndContext>
+        )}
       </div>
     </div>
   );
